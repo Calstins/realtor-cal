@@ -13,7 +13,7 @@ const Header = () => {
   return (
     <div className='bg-white border-b shadow-sm sticky top-0 z-1000'>
         <header className='flex justify-between items-center px-3 max-w-6xl mx-auto'>
-            <div class="font-bold line-6 text-lg cursor-pointer" onClick={()=>navigate("/")}>
+            <div className="font-bold line-6 text-lg cursor-pointer" onClick={()=>navigate("/")}>
                 Property<span className='text-blue-500 font-extrabold'>X</span>change
             </div>
             <div>
