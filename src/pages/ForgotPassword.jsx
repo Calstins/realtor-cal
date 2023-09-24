@@ -2,18 +2,30 @@ import React, { useState } from 'react'
 import Img from '../assets/real-estate.jpg'
 import { Link } from 'react-router-dom';
 import GoogleAuth from '../components/GoogleAuth';
+import { toast } from 'react-toastify';
+import { getAuth, sendPasswordResetEmail } from 'firebase/auth';
 
 const ForgotPassword = () => {
   const [formData, setFormData] = useState({
     email: "",
     password: "",
   })
-  const {email, password} = formData;
+  const {email} = formData;
   function onChange(e) {
     setFormData((prevState)=>({
       ...prevState,
       [e.target.id]: e.target.value,
     }))
+  }
+  async function onSubmit(e){
+    e.preventDefault()
+    try {
+      const auth =getAuth()
+      await sendPasswordResetEmail(auth, email);
+      toast.success('Email was sent')
+    } catch (error) {
+      toast.error("Could not send reset password")
+    }
   }
   return (
     <section>
@@ -23,7 +35,7 @@ const ForgotPassword = () => {
           <img src={Img} alt="real-estate" className='w-full rounded-2xl' />
         </div>
         <div className='w-full md:w-[67%] lg:w-[40%] lg:ml-20'>
-          <form>
+          <form onSubmit={onSubmit}>
             <input type="email" id="email" className='w-full mb-6 px-4 py-2 text-xl text-gray-700 bg-white border-gray-300 rounded transition ease-in-out' value={email} onChange={onChange} placeholder='Email address'/>
             <div className='flex justify-between whitespace-nowrap text-sm sm:text-lg'>
               <p className='mb-6'>Don't have an account? <Link to='/sign-up' className='text-red-600 hover:text-red-900 transition duration-200 ease-in-out ml-1' >Register</Link></p>

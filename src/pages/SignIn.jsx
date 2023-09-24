@@ -1,8 +1,10 @@
 import React, { useState } from 'react'
 import Img from '../assets/real-estate.jpg'
 import {AiOutlineEyeInvisible, AiOutlineEye} from "react-icons/ai"
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import GoogleAuth from '../components/GoogleAuth';
+import { signInWithEmailAndPassword, getAuth } from 'firebase/auth';
+import { toast } from 'react-toastify';
 
 const SignIn = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -10,12 +12,26 @@ const SignIn = () => {
     email: "",
     password: "",
   })
+  const navigate = useNavigate();
   const {email, password} = formData;
   function onChange(e) {
     setFormData((prevState)=>({
       ...prevState,
       [e.target.id]: e.target.value,
     }))
+  }
+
+  async function onSubmit(e) {
+    e.preventDefault()
+    try {
+      const auth = getAuth()
+      const userCredential = await signInWithEmailAndPassword(auth, password)
+      if (userCredential.user) {
+        navigate("/")
+      }
+    } catch (error) {
+      toast.error('Incorrect User Details')
+    }
   }
   return (
     <section>
@@ -25,7 +41,7 @@ const SignIn = () => {
           <img src={Img} alt="real-estate" className='w-full rounded-2xl' />
         </div>
         <div className='w-full md:w-[67%] lg:w-[40%] lg:ml-20'>
-          <form>
+          <form onSubmit={onSubmit}>
             <input type="email" id="email" className='w-full mb-6 px-4 py-2 text-xl text-gray-700 bg-white border-gray-300 rounded transition ease-in-out' value={email} onChange={onChange} placeholder='Email address'/>
             <div className='relative mb-6'>
               <input type={showPassword ? "text" : "password"} id="password" className='w-full px-4 py-2 text-xl text-gray-700 bg-white border-gray-300 rounded transition ease-in-out' value={password} onChange={onChange} placeholder='Password'/>
