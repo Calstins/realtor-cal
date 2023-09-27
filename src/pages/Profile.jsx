@@ -4,6 +4,8 @@ import React, { useState } from 'react'
 import { useNavigate } from 'react-router';
 import { toast } from 'react-toastify';
 import { db } from '../firebase';
+import {CiHome} from 'react-icons/ci'
+import { Link } from 'react-router-dom';
 
 const Profile = () => {
 
@@ -90,6 +92,12 @@ const Profile = () => {
             <p onClick={onLogout} className='text-blue-600 hover:blue-800  transition ease-in-out duration-200 ml-1 cursor-pointer'>Sign Out</p>
           </div>
         </form>
+        <button type="submit" className='w-full bg-blue-600 text-white uppercase px-7 py-3 text-sm font-medium rounded shadow-md hover:bg-blue-700 transition duration-150 ease-in-out hover:shadow-lg active:bg-blue-800'>
+          <Link to='/create-listing'c className='flex justify-center items-center'>
+            <CiHome className='mr-2 text-3xl bg-red-200 rounded-full p-1 border-2'/>
+            Sell or Rent your Property
+          </Link>
+        </button>
       </div>
     </section>
     </>
