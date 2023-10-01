@@ -77,7 +77,7 @@ export default function Profile() {
       setListings(listings);
       setLoading(false);
     }
-    fetchUserListings();
+    fetchUserListings(); 
   }, [auth.currentUser.uid]);
   async function onDelete(listingID) {
     if (window.confirm("Are you sure you want to delete?")) {
