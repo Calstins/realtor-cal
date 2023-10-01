@@ -17,7 +17,7 @@ const CreateListing = () => {
 
     const navigate = useNavigate();
     const auth = getAuth()
-    const [geolocationEnabled, setGeolocationEnabled ] = useState(true)
+    const [geolocationEnabled, setGeolocationEnabled ] = useState(false)
     const [loading, setLoading] = useState(false)
     const [formData, setFormData] = useState({
         type: "rent",
@@ -312,7 +312,7 @@ const CreateListing = () => {
                         <input 
                             type="number" id="latitude" value={latitude} onChange={onChange}min="-90"
                             max="90" required
-                            className="w-full px-4 py-2 text-xl text-gray-700 bg-white border border-gray-300 rounded transition duration-150 ease-in-out focus:bg-white focus:text-gray-700 focus:border-slate-600 text-center"
+                            className="w-full px-4 py-2 text-xl text-gray-700 bg-white border border-gray-300 rounded transition duration-150 ease-in-out focus:bg-white focus:text-gray-700 focus:border-slate-600 text-center" step="0.01"
                         />
                     </div>
                     <div className="">
@@ -325,6 +325,7 @@ const CreateListing = () => {
                             required
                             min="-180"
                             max="180"
+                            step="0.00000000000000000000001"
                             className="w-full px-4 py-2 text-xl text-gray-700 bg-white border border-gray-300 rounded transition duration-150 ease-in-out focus:bg-white focus:text-gray-700 focus:border-slate-600 text-center"
                         />
                     </div>
