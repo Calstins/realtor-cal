@@ -1,4 +1,4 @@
-import { getAuth, updateProfile } from "firebase/auth";
+import { getAuth, updateProfile } from 'firebase/auth';
 import {
   collection,
   deleteDoc,
@@ -8,14 +8,14 @@ import {
   query,
   updateDoc,
   where,
-} from "firebase/firestore";
-import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import { toast } from "react-toastify";
-import { db } from "../firebase";
-import { FcHome } from "react-icons/fc";
-import { useEffect } from "react";
-import ListingItem from "../components/ListingItem";
+} from 'firebase/firestore';
+import { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
+import { db } from '../firebase';
+import { FcHome } from 'react-icons/fc';
+import { useEffect } from 'react';
+import ListingItem from '../components/ListingItem';
 
 export default function Profile() {
   const auth = getAuth();
@@ -30,7 +30,7 @@ export default function Profile() {
   const { name, email } = formData;
   function onLogout() {
     auth.signOut();
-    navigate("/");
+    navigate('/');
   }
   function onChange(e) {
     setFormData((prevState) => ({
@@ -48,23 +48,23 @@ export default function Profile() {
 
         // update name in the firestore
 
-        const docRef = doc(db, "users", auth.currentUser.uid);
+        const docRef = doc(db, 'users', auth.currentUser.uid);
         await updateDoc(docRef, {
           name,
         });
       }
-      toast.success("Profile details updated");
+      toast.success('Profile details updated');
     } catch (error) {
-      toast.error("Could not update the profile details");
+      toast.error('Could not update the profile details');
     }
   }
   useEffect(() => {
     async function fetchUserListings() {
-      const listingRef = collection(db, "listings");
+      const listingRef = collection(db, 'listings');
       const q = query(
         listingRef,
-        where("userRef", "==", auth.currentUser.uid),
-        orderBy("timestamp", "desc")
+        where('userRef', '==', auth.currentUser.uid),
+        orderBy('timestamp', 'desc')
       );
       const querySnap = await getDocs(q);
       let listings = [];
@@ -80,13 +80,13 @@ export default function Profile() {
     fetchUserListings();
   }, [auth.currentUser.uid]);
   async function onDelete(listingID) {
-    if (window.confirm("Are you sure you want to delete?")) {
-      await deleteDoc(doc(db, "listings", listingID));
+    if (window.confirm('Are you sure you want to delete?')) {
+      await deleteDoc(doc(db, 'listings', listingID));
       const updatedListings = listings.filter(
         (listing) => listing.id !== listingID
       );
       setListings(updatedListings);
-      toast.success("Successfully deleted the listing");
+      toast.success('Successfully deleted the listing');
     }
   }
   function onEdit(listingID) {
@@ -107,7 +107,7 @@ export default function Profile() {
               disabled={!changeDetail}
               onChange={onChange}
               className={`mb-6 w-full px-4 py-2 text-xl text-gray-700 bg-white border border-gray-300 rounded transition ease-in-out ${
-                changeDetail && "bg-red-200 focus:bg-red-200"
+                changeDetail && 'bg-red-200 focus:bg-red-200'
               }`}
             />
 
@@ -131,7 +131,7 @@ export default function Profile() {
                   }}
                   className="text-red-600 hover:text-red-700 transition ease-in-out duration-200 ml-1 cursor-pointer"
                 >
-                  {changeDetail ? "Apply change" : "Edit"}
+                  {changeDetail ? 'Apply change' : 'Edit'}
                 </span>
               </p>
               <p
